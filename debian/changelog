@@ -1,0 +1,42 @@
+oracle-base-rdbms (1.0-7) stable; urgency=low
+
+ * Added `diag' directory
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Fri, 15 Jun 2012 11:42:24 +0600
+
+oracle-base-rdbms (1.0-6) stable; urgency=low
+
+ * Added `owb' and `mgw' directories
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Thu, 07 Jun 2012 12:55:19 +0600
+
+oracle-base-rdbms (1.0-5) stable; urgency=low
+
+ * List directories to package
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Thu, 24 May 2012 18:16:24 +0600
+
+oracle-base-rdbms (1.0-4) stable; urgency=low
+
+ * Added new directories
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Thu, 24 May 2012 17:48:49 +0600
+
+oracle-base-rdbms (1.0-3) stable; urgency=low
+
+ * Added `/db' directory
+ * Directory `rdbms/audit' moved into `/var/log/oracle'
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Wed, 18 Apr 2012 11:00:29 +0600
+
+oracle-base-rdbms (1.0-2) stable; urgency=low
+
+ * Added `oracle-base-rdbms-log-dirs' script
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Tue, 13 Mar 2012 15:40:13 +0600
+
+oracle-base-rdbms (1.0-1) stable; urgency=low
+
+ * Initial version of package
+
+ -- Kryazhevskikh Sergey <soliverr@gmail.com>  Thu, 18 Aug 2011 17:22:42 +0600

@@ -1,0 +1,13 @@
+Source: oracle-base-rdbms
+Section: rdbms
+Priority: required
+Maintainer: Kryazhevskikh Sergey, <soliverr@gmail.com>
+
+Package: oracle-base-rdbms
+Architecture: all
+Depends: oracle-base
+Description: Directories layout for Oracle RDBMS/Client.
+ This package provides directories layout and system groups
+ for Oracle RDBMS and/or client sofware.
+ .
+

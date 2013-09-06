@@ -1,0 +1,19 @@
+oracle-base-rdbms
+-----------------
+
+Directory layouts for Oracle RDBMS and/or Oracle client.
+
+Directories destination:
+
+ - /db             - Directory to keep files: database and control files, archivelog, flashback, etc.
+ - /var/log/oracle - Directory layouts to keep Oracle log files
+
+UNIXs' groups:
+
+ - dba     - group that has 'AS SYSDBA' privilege
+
+UNIXs' users:
+
+ User `oracle' from oracle-base package is added to `dba' group.
+
+ -- Sergey Kryazhevskikh <soliverr@gmail.com>

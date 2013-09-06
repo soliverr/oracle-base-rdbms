@@ -1,0 +1,101 @@
+#! /bin/bash
+#
+#  Make log dirs for Oracle RDBMS and move logs from $ORACLE_HOME
+#
+#  Usage:
+#    oracle-base-rdbms-make-log [-d] [-s]
+
+ORACLE_RDBMS_LOG_BASE=${ORACLE_RDBMS_LOG_BASE:-/var/log/oracle}
+ORACLE_RDBMS_LOG_DIRS='dbca diag cfgtoollogs css ctx hs isqlplus ldap ldap/admin ldap/odi network network/trace opmn j2ee racg rdbms rdbms/audit mgw owb owb/j2ee sqlplus srvm sysman ultrasearch oraInventory'
+
+usage() {
+      cat << __EOFF__
+
+$0:
+    -d     -- Create log dirs in $ORACLE_RDBMS_LOG_BASE
+    -s     -- Create symbolic links in $ORACLE_HOME to created log dirs
+__EOFF__
+}
+
+exit_error() {
+    echo $1
+    exit 1
+}
+
+make_log_dirs() {
+    local d dst
+
+    if [ -n "$ORACLE_RDBMS_LOG_BASE_BUILD_DST" ] ; then
+        dst="$ORACLE_RDBMS_LOG_BASE_BUILD_DST/$ORACLE_RDBMS_LOG_BASE"
+    else 
+        dst="$ORACLE_RDBMS_LOG_BASE"
+    fi
+    [ -d "$dst" ] || (mkdir -p "$dst" || exit_error "Can't create $dst")
+
+    for d in $ORACLE_RDBMS_LOG_DIRS ; do
+        [ -d "$dst/$d" ] || (mkdir -p "$dst/$d" || exit_error "Can't create $dst/$d")
+    done
+}
+
+make_sym_links() {
+    local d src tgt dst
+
+    for d in $ORACLE_RDBMS_LOG_DIRS ; do
+         tgt=$ORACLE_RDBMS_LOG_BASE/$d
+        [ -n "$ORACLE_RDBMS_LOG_BASE_BUILD_DST" ] && dst="$ORACLE_RDBMS_LOG_BASE_BUILD_DST/$tgt" || dst="$tgt"
+
+        [ -d $tgt ] || continue
+
+        case $d in 
+            dbca) src=$ORACLE_HOME/assistants/dbca/logs ;;
+            cfgtoollogs) src=$ORACLE_HOME/cfgtoollogs ;;
+            css) src=$ORACLE_HOME/css/log ;;
+            ctx) src=$ORACLE_HOME/ctx/log ;;
+            hs) src=$ORACLE_HOME/hs/log ;;
+            ldap) src=$ORACLE_HOME/ldap/log ;;
+            ldap/admin) src=$ORACLE_HOME/ldap/admin/LOGS ;;
+            ldap/odi) src=$ORACLE_HOME/ldap/odi/log ;;
+            isqlplus) src=$ORACLE_HOME/oc4j/j2ee/isqlplus/log ;;
+            j2ee) src=$ORACLE_HOME/oc4j/j2ee/home/log ;;
+            mgw) src=$ORACLE_HOME/mgw/log ;;
+            owb) src=$ORACLE_HOME/owb/log ;;
+            owb/j2ee) src=$ORACLE_HOME/owb/j2ee/log ;;
+            network) src=$ORACLE_HOME/network/log ;;
+            network/trace) src=$ORACLE_HOME/network/trace ;;
+            opmn) src=$ORACLE_HOME/opmn/logs ;;
+            racg) src=$ORACLE_HOME/racg/log ;;
+            rdbms) src=$ORACLE_HOME/rdbms/log ;;
+            rdbms/audit) src=$ORACLE_HOME/rdbms/audit ;;
+            sqlplus) src=$ORACLE_HOME/sqlplus/log ;;
+            srvm) src=$ORACLE_HOME/srvm/log ;;
+            sysman) src=$ORACLE_HOME/sysman/log ;;
+            ultrasearch) src=$ORACLE_HOME/ultrasearch/log ;;
+            * ) continue ;;
+
+        esac
+
+        [ -d $src ] || continue
+        mv $src/* $dst 2>&-
+        rmdir $src || exit_error "Can't delete $src"
+        ln -s -f $tgt $src || exit_error "Can't create symbolic link $src on $tgt"
+    done
+
+    src=$ORACLE_HOME/log
+    tgt=$ORACLE_RDBMS_LOG_BASE
+    [ -n "$ORACLE_RDBMS_LOG_BASE_BUILD_DST" ] && dst="$ORACLE_RDBMS_LOG_BASE_BUILD_DST/$tgt" || dst="$tgt"
+    mv $src/* $dst 2>&-
+    rmdir $src 2>&-
+    ln -s -f $tgt $src || exit_error "Can't create symbolic link $src on $tgt"
+}
+
+[ $# -lt 1 ] && (usage; exit 0)
+
+for i in $@ ; do
+    case $i in
+      -d ) make_log_dirs ;;
+      -s ) make_log_dirs && make_sym_links ;;
+      * ) continue ;;
+    esac
+done
+
+exit 0
