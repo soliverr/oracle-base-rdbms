@@ -4,7 +4,7 @@ Summary(ru_RU.UTF-8)   : Иерархия каталогов для СУБД Ora
 Name      : oracle-base-rdbms
 Version   : 1.0
 Release   : 7
-Group     : RDBMS
+Group     : Database
 
 Packager  : Kryazhevskikh Sergey, <soliverr@gmail.com>
 License   : GPLv2

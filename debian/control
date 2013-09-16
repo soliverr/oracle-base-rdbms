@@ -1,7 +1,8 @@
 Source: oracle-base-rdbms
-Section: rdbms
+Section: database
 Priority: required
 Maintainer: Kryazhevskikh Sergey, <soliverr@gmail.com>
+Build-Depends: debhelper (>= 5)
 
 Package: oracle-base-rdbms
 Architecture: all
