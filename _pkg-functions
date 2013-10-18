@@ -18,19 +18,21 @@
 preinst() {
     local distr=${1:-$DISTR}
     local action=${2:-$ACTION}
+    local groups="dba dboper"
 
     case "$action" in
         install)
-            # Create `dba' group
-            if ! grep --silent --no-messages '^dba' /etc/group >/dev/null 2>&1; then
-                groupadd -r dba || true
-            fi
-            gpasswd -A oracle dba
-            gpasswd -M oracle dba
-
-            # Check group existence
-            groups oracle | grep dba >/dev/null
-
+            # Create groups
+            for g in $groups ; do
+                if ! grep --silent --no-messages "^$g" /etc/group >/dev/null 2>&1; then
+                    groupadd -r $g || true
+                fi
+                gpasswd -A oracle $g
+                gpasswd -M oracle $g
+            
+                # Check group existence
+                groups oracle | grep --silent --no-messages $g
+            done
         ;;
         upgrade)
         ;;

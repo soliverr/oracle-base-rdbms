@@ -2,8 +2,8 @@
 Summary   :  Directory layout for Oracle RDBMS.
 Summary(ru_RU.UTF-8)   : Иерархия каталогов для СУБД Oracle.
 Name      : oracle-base-rdbms
-Version   : 1.0
-Release   : 7
+Version   : 2.0
+Release   : 1
 Group     : Database
 
 Packager  : Kryazhevskikh Sergey, <soliverr@gmail.com>
@@ -80,8 +80,8 @@ postinst "redhat" "$action"
 
 if [ $1 -eq 0 ] ; then
   action=purge
-  chmod -R 2755 /etc/oracle
-  chown -R oracle:oracle /etc/oracle
+  #chmod -R 2755 /etc/oracle
+  #chown -R oracle:oracle /etc/oracle
 else
   action=upgrade
 fi
@@ -100,6 +100,9 @@ postrm "redhat" "$action"
 %attr(750,oracle,dba) /usr/bin/*
 
 %changelog
+* Fri Oct 18 2013 Kryazhevskikh Sergey <soliverr@gmail.com> - 2.0-1  12:59:28 +0600
+- Added `dboper' system group. Closed [ticket:#5]
+
 * Fri Jun 15 2012 Kryazhevskikh Sergey <soliverr@gmail.com> - 1.0-7  11:42:24 +0600
 - Added `diag' directory
 
