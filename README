@@ -17,4 +17,7 @@ UNIXs' users:
 
  User `oracle' from oracle-base package is added to `dba' and `dboper' groups.
 
+
+Project is hosted on SourceForge: http://sourceforge.net/projects/oracledba
+
  -- Sergey Kryazhevskikh <soliverr@gmail.com>
